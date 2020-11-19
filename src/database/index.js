@@ -18,10 +18,13 @@ class Database {
   }
 
   init() {
+    // Creating connection with database
     this.connection = new Sequelize(databaseConfig);
 
+    // Mapping models to apply connection to them
     models.map((model) => model.init(this.connection));
   }
 }
 
+// Export new database to app
 export default new Database();

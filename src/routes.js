@@ -1,5 +1,8 @@
 // Imports
+// Node_modules imports
 import { Router } from 'express';
+
+// Import user model
 import User from './app/models/Users';
 
 // Creating Router instance
@@ -16,4 +19,5 @@ routes.get('/', async (request, response) => {
   response.json(user);
 });
 
+// Export routes
 export default routes;

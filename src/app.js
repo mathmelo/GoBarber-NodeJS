@@ -1,7 +1,11 @@
 // Imports
+// Node_modules imports
 import express from 'express';
 
+// Import routes
 import routes from './routes';
+
+// Import model loader
 import './database';
 
 // Creating class 'App' to start application

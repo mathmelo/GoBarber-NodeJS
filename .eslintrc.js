@@ -1,8 +1,12 @@
+// EsLint congifuration file
+
 module.exports = {
   env: {
     es2021: true,
     node: true,
   },
+
+  // All code standardizers
   extends: ['airbnb-base', 'prettier'],
   plugins: ['prettier'],
   parserOptions: {
