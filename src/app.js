@@ -1,6 +1,8 @@
 // Imports
 import express from 'express';
+
 import routes from './routes';
+import './database';
 
 // Creating class 'App' to start application
 class App {

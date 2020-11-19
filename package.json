@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server",
-    "dev:debug": "nodemon --inspect src/server"
+    "dev:debug": "nodemon --inspect src/server",
+    "migrate": "sequelize db:migrate",
+    "migrate:undo": "sequelize db:migrate:undo"
   },
   "dependencies": {
     "express": "^4.17.1",

@@ -6,6 +6,7 @@ module.exports = {
   password: 'docker',
   database: 'gobarber',
   define: {
+    // Sets the time when creating a user
     timestamps: true,
     underscored: true,
     underscoredAll: true,
