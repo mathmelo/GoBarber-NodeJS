@@ -14,14 +14,19 @@ class UserController {
     }
 
     // User creation
-    const { name, email, password_hash } = await User.create(request.body);
+    const { name, email, provider, id } = await User.create(request.body);
 
     // Return data to client
     return response.json({
+      id,
       name,
       email,
-      password_hash,
+      provider,
     });
+  }
+
+  async update(request, response) {
+    return response.json({ message: 'ok' });
   }
 }
 

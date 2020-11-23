@@ -5,13 +5,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server",
-    "start": "node src/server",
     "dev:debug": "nodemon --inspect src/server",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5"
