@@ -23,6 +23,7 @@ export default async (request, response, next) => {
       authConfig.youDidNotSeeAnything
     );
 
+    // Creating a new variable on request with ID information
     request.userId = decoded.id;
     return next();
   } catch (err) {

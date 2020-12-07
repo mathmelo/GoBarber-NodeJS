@@ -1,6 +1,7 @@
 // Imports
 // Node_modules imports
 import jwt from 'jsonwebtoken';
+import * as Yup from 'yup';
 
 // User model import
 import User from '../models/Users';
@@ -12,6 +13,17 @@ import authConfig from '../../config/auth';
 class Session {
   // Creating a session method
   async store(request, response) {
+    // Validation of request data using YUP
+    const schema = Yup.object().shape({
+      email: Yup.string().email().required(),
+      password: Yup.string().required(),
+    });
+
+    // Returning error if invalid
+    if (!(await schema.isValid(request.body))) {
+      return response.status(400).json({ error: 'Validation failed' });
+    }
+
     const { email, password } = request.body;
     const user = await User.findOne({ where: { email } });
 
