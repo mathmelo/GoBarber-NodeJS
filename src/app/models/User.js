@@ -20,6 +20,7 @@ class User extends Model {
       }
     );
 
+    // Turns password into a hash
     this.addHook('beforeSave', async (user) => {
       if (user.password) {
         user.password_hash = await bcryptjs.hash(user.password, 8);
@@ -29,6 +30,12 @@ class User extends Model {
     return this;
   }
 
+  // Associates file IDs with the avatar_id column
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
+  }
+
+  // Check if the password is correct
   checkPassword(password) {
     return bcryptjs.compare(password, this.password_hash);
   }

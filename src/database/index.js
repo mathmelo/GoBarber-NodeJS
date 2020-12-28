@@ -6,10 +6,11 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 
 // Import models
-import User from '../app/models/Users';
+import User from '../app/models/User';
+import File from '../app/models/File';
 
 // Models array
-const models = [User];
+const models = [User, File];
 
 // Models loader class
 class Database {
@@ -21,8 +22,13 @@ class Database {
     // Creating connection with database
     this.connection = new Sequelize(databaseConfig);
 
-    // Mapping models to apply connection to them
-    models.map((model) => model.init(this.connection));
+    // First mapping: Mapping the models to apply connection to them
+    // Second mapping: Mapping the models to reference user to your avatar´s id
+    models
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      );
   }
 }
 
