@@ -8,9 +8,10 @@ import databaseConfig from '../config/database';
 // Import models
 import User from '../app/models/User';
 import File from '../app/models/File';
+import Appointment from '../app/models/Appointment';
 
 // Models array
-const models = [User, File];
+const models = [User, File, Appointment];
 
 // Models loader class
 class Database {

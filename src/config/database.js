@@ -3,7 +3,7 @@ module.exports = {
   dialect: 'postgres',
   host: 'localhost',
   username: 'postgres',
-  password: 'docker',
+  password: process.env.DOCKER_KEY || 'docker',
   database: 'gobarber',
   define: {
     // Sets the time when creating a user
