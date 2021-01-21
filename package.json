@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node src/server",
+    "start": "node -r sucrase/register src/server",
     "dev": "nodemon src/server",
     "dev:debug": "nodemon --inspect src/server",
     "migrate": "sequelize db:migrate",
@@ -20,7 +20,8 @@
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
-    "yup": "^0.32.1"
+    "yup": "^0.32.1",
+    "sucrase": "^3.16.0"
   },
   "devDependencies": {
     "eslint": "^7.13.0",
@@ -30,7 +31,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
-    "sequelize-cli": "^6.2.0",
-    "sucrase": "^3.16.0"
+    "sequelize-cli": "^6.2.0"
   }
 }

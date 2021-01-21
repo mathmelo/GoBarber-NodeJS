@@ -1,4 +1,5 @@
 // Imports
+import 'dotenv/config';
 import app from './app';
 
 // Add port to server
