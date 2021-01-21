@@ -1,10 +1,10 @@
 // Connection with PostgreSQL Database
 module.exports = {
   dialect: 'postgres',
-  host: 'localhost',
-  username: 'postgres',
-  password: process.env.DOCKER_KEY,
-  database: 'gobarber',
+  host: process.env.HOST,
+  username: process.env.USER,
+  password: process.env.DATABASE_KEY,
+  database: process.env.DATABASE,
   define: {
     // Sets the time when creating a user
     timestamps: true,
