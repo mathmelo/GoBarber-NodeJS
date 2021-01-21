@@ -19,7 +19,7 @@ class Database {
     this.init();
   }
 
-  init() {
+  async init() {
     // Creating connection with database
     this.connection = new Sequelize(databaseConfig);
 
