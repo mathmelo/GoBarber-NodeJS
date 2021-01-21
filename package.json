@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node src/server",
     "dev": "nodemon src/server",
     "dev:debug": "nodemon --inspect src/server",
     "migrate": "sequelize db:migrate",
