@@ -10,6 +10,7 @@ import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
+import NotificationController from './app/controllers/NotificationController';
 
 // Import Middlewares
 import Auth from './app/middlewares/auth';
@@ -37,6 +38,10 @@ routes.post('/sessions', SessionController.store);
 // Appointment Routes
 routes.post('/appointments', Auth, AppointmentController.store);
 routes.get('/appointments', Auth, AppointmentController.show);
+routes.delete('/appointments/:id', Auth, AppointmentController.delete);
+
+// Notification Routes
+routes.get('/notifications', Auth, NotificationController.show);
 
 // Schedule Routes
 routes.get('/schedule', Auth, ScheduleController.show);

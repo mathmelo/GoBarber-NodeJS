@@ -21,6 +21,9 @@ class Schedule {
 
     const { date } = request.query;
 
+    // if (!isDate(date))
+    //  return response.status(400).json({ error: 'The date is not valid' });
+
     if (!date)
       return response.status(400).json({ error: 'Date was not informed' });
 
