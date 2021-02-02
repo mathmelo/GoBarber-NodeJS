@@ -120,7 +120,10 @@ class AppointmentController {
   }
 
   async delete(request, response) {
-    const appointment = await Appointment.findByPk(request.param.id);
+    const appointment = await Appointment.findByPk(request.params.id);
+
+    if (!appointment)
+      return response.status(400).json({ error: 'Appointment not found' });
 
     if (appointment.user_id !== request.userId) {
       return response.status(401).json({
@@ -131,9 +134,9 @@ class AppointmentController {
     const date = subHours(appointment.date, 2);
 
     if (isBefore(date, new Date())) {
-      return response
-        .status(401)
-        .json({ error: 'You can only cancel appointments 2 hours in advance' });
+      return response.status(401).json({
+        error: 'You can only cancel appointments 2 hours in advance',
+      });
     }
 
     appointment.canceled_at = new Date();
@@ -143,5 +146,4 @@ class AppointmentController {
     return response.json(appointment);
   }
 }
-
 export default new AppointmentController();
