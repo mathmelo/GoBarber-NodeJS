@@ -10,6 +10,9 @@ import File from '../models/File';
 import Appointment from '../models/Appointment';
 import Notification from '../schema/NotificationSchema';
 
+// Lib imports
+import mailer from '../../lib/NodeMailer';
+
 class AppointmentController {
   async show(request, response) {
     const { page = 1 } = request.query;
@@ -120,7 +123,15 @@ class AppointmentController {
   }
 
   async delete(request, response) {
-    const appointment = await Appointment.findByPk(request.params.id);
+    const appointment = await Appointment.findByPk(request.params.id, {
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['name', 'email'],
+        },
+      ],
+    });
 
     if (!appointment)
       return response.status(400).json({ error: 'Appointment not found' });
@@ -142,6 +153,12 @@ class AppointmentController {
     appointment.canceled_at = new Date();
 
     await appointment.save();
+
+    await mailer.sendMail({
+      to: `${appointment.provider.name} <${appointment.provider.email}>`,
+      subject: 'Appointment cancelled',
+      text: 'You have a new cancellation',
+    });
 
     return response.json(appointment);
   }
