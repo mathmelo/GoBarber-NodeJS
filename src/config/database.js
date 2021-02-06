@@ -1,3 +1,7 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 // Connection with PostgreSQL Database
 module.exports = {
   dialect: 'postgres',
