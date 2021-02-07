@@ -1,5 +1,4 @@
-// Imports
-// Node_modules imports
+// IMPORTS
 import Sequelize, { Model } from 'sequelize';
 
 class Appointment extends Model {

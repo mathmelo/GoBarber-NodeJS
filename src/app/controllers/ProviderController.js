@@ -1,5 +1,13 @@
+// IMPORTS =====================================================================
+// Models imports
 import User from '../models/User';
 import File from '../models/File';
+
+// =============================================================================
+
+/**
+ * Controller responsible to show all providers
+ */
 
 class ProviderController {
   async show(request, response) {
@@ -20,5 +28,6 @@ class ProviderController {
     return response.json(providers);
   }
 }
+// =============================================================================
 
 export default new ProviderController();

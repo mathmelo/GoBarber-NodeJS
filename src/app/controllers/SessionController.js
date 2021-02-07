@@ -1,4 +1,4 @@
-// Imports
+// IMPORTS =====================================================================
 // Node_modules imports
 import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
@@ -9,17 +9,18 @@ import User from '../models/User';
 // Auth config
 import authConfig from '../../config/auth';
 
-// User Login controller
+// =============================================================================
+
+/**
+ * Controller responsible for create a session with JWT autentication
+ */
 class Session {
-  // Creating a session method
   async store(request, response) {
-    // Validation of request data using YUP
     const schema = Yup.object().shape({
       email: Yup.string().email().required(),
       password: Yup.string().required(),
     });
 
-    // Returning error if invalid
     if (!(await schema.isValid(request.body))) {
       return response.status(400).json({ error: 'Validation failed' });
     }
@@ -50,5 +51,6 @@ class Session {
     });
   }
 }
+// =============================================================================
 
 export default new Session();

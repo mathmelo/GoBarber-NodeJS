@@ -1,9 +1,9 @@
-// Imports
-// Node_modules imports
+// IMPORTS =====================================================================
+// Node_modules imports.
 import { Router } from 'express';
 import multer from 'multer';
 
-// Import Controllers
+// Import Controllers.
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
@@ -12,42 +12,43 @@ import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
 import NotificationController from './app/controllers/NotificationController';
 
-// Import Middlewares
+// Import Middlewares.
 import Auth from './app/middlewares/auth';
 
-// Import Configs
+// Import Configs.
 import multerConfig from './config/multer';
 
-// Creating Router Instance
+// PREVIOUS CONFIGURATION ======================================================
+// Creating Router Instance.
 const routes = new Router();
 
-// Creating Multer Middleware to file saving
+// Creating Multer Middleware to file saving.
 const upload = multer(multerConfig);
 
-// Routes
-// User Routes
+// ROUTES ======================================================================
+// User Routes.
 routes.post('/users', UserController.store);
 routes.put('/users', Auth, UserController.update);
 
-// Provider Routes
+// Provider Routes.
 routes.get('/providers', Auth, ProviderController.show);
 
-// Session Routes
+// Session Routes.
 routes.post('/sessions', SessionController.store);
 
-// Appointment Routes
+// Appointment Routes.
 routes.post('/appointments', Auth, AppointmentController.store);
 routes.get('/appointments', Auth, AppointmentController.show);
 routes.delete('/appointments/:id', Auth, AppointmentController.delete);
 
-// Notification Routes
+// Notification Routes.
 routes.get('/notifications', Auth, NotificationController.show);
 
-// Schedule Routes
+// Schedule Routes.
 routes.get('/schedule', Auth, ScheduleController.show);
 
-// Upload Routes
+// Upload Routes.
 routes.post('/files', Auth, upload.single('file'), FileController.store);
 
-// Exporting routes
+// Exporting routes.
 export default routes;

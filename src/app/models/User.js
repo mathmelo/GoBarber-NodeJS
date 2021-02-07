@@ -1,8 +1,9 @@
-// Imports
+// IMPORTS =====================================================================
 import Sequelize, { Model } from 'sequelize';
 import bcryptjs from 'bcryptjs';
 
-// User creation model
+// =============================================================================
+
 class User extends Model {
   // Variable 'sequelize' is a data connection from database file
   static init(sequelize) {

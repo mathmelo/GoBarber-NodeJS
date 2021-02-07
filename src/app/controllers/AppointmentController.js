@@ -1,4 +1,4 @@
-// Imports
+// IMPORTS =====================================================================
 // Node_modules imports
 import * as Yup from 'yup';
 import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
@@ -12,6 +12,13 @@ import Notification from '../schema/NotificationSchema';
 
 // Lib imports
 import mailer from '../../lib/NodeMailer';
+
+// =============================================================================
+
+/**
+ * Controller responsible to listing, create and cancel appointments.
+ * Send e-mails to providers and notify them.
+ */
 
 class AppointmentController {
   async show(request, response) {
@@ -56,6 +63,7 @@ class AppointmentController {
 
     const { provider_id, date } = request.body;
 
+    // Checking if a provider_id belongs to a provider
     const isProvider = await User.findOne({
       where: {
         id: provider_id,
@@ -69,11 +77,17 @@ class AppointmentController {
         .json({ error: 'You can only create an appointment with providers' });
     }
 
+    // Checking if the user is creating a appointment with himself
     if (provider_id === request.userId)
       return response
         .status(400)
         .json({ error: 'You can not create appointments with yourself' });
 
+    /**
+     * Making treatment with dates. Here, two restrictions are added.
+     * First: Client cannot create  an appointment before actual date
+     * Second: Client cannot create an appointment with same date as the other
+     */
     const hourStart = startOfHour(parseISO(date));
 
     if (isBefore(hourStart, new Date())) {
@@ -163,4 +177,6 @@ class AppointmentController {
     return response.json(appointment);
   }
 }
+
+// =============================================================================
 export default new AppointmentController();

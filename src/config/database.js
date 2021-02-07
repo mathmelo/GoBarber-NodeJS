@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-// Connection with PostgreSQL Database
+// Connection with PostgreSQL Database.
 module.exports = {
   dialect: 'postgres',
   host: process.env.HOST,
@@ -10,10 +10,10 @@ module.exports = {
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
   define: {
-    // Sets the time when creating a user
+    // Sets the time when creating a user.
     timestamps: true,
 
-    // Sequelize renames tables, columns and relationships in the underscored pattern
+    // Sequelize renames tables, columns and relationships in the underscored pattern.
     underscored: true,
     underscoredAll: true,
   },

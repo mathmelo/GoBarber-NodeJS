@@ -1,4 +1,4 @@
-// Imports
+// IMPORTS =====================================================================
 // Node_modules imports
 import { Op } from 'sequelize';
 import { startOfDay, endOfDay, parseISO } from 'date-fns';
@@ -6,6 +6,13 @@ import { startOfDay, endOfDay, parseISO } from 'date-fns';
 // Models imports
 import Appointment from '../models/Appointment';
 import User from '../models/User';
+
+// =============================================================================
+
+/**
+ * Controller responsible to show all appointments created for the provider in
+ * question
+ */
 
 class Schedule {
   async show(request, response) {
@@ -20,9 +27,6 @@ class Schedule {
       return response.status(401).json({ error: 'User is not a provider' });
 
     const { date } = request.query;
-
-    // if (!isDate(date))
-    //  return response.status(400).json({ error: 'The date is not valid' });
 
     if (!date)
       return response.status(400).json({ error: 'Date was not informed' });
@@ -42,5 +46,6 @@ class Schedule {
     return response.json(appointments);
   }
 }
+// =============================================================================
 
 export default new Schedule();

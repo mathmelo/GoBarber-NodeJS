@@ -1,4 +1,4 @@
-// Imports
+// IMPORTS
 import Sequelize, { Model } from 'sequelize';
 
 // File creation model

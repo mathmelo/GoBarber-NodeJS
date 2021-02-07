@@ -1,12 +1,16 @@
+// IMPORTS =====================================================================
+// Node_modules imports
 import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
+
+// Import Configs
 import authConfig from '../../config/auth';
 
+// =============================================================================
+
 export default async (request, response, next) => {
-  // Getting header token
   const auth = request.headers.authorization;
 
-  // Checking if the token exists
   if (!auth) return response.status(401).json({ error: 'Token not provided' });
 
   // Unstructuring token

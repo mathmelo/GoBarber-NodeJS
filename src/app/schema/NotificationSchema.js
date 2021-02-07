@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+/**
+ * This Schema is responsible for writing down notifications
+ * regarding appointments and show to provider
+ */
+
 const NotificationSchema = new mongoose.Schema(
   {
     content: {

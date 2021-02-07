@@ -1,8 +1,10 @@
-// Imports
+// IMPORTS =====================================================================
 // Node_modules imports
 import multer from 'multer';
 import crypto from 'crypto';
 import { extname, resolve } from 'path';
+
+// =============================================================================
 
 // Creating a multer configuration to convert file name and destination path
 export default {
