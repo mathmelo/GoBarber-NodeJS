@@ -12,12 +12,11 @@ import Notification from '../schema/NotificationSchema';
 
 // Lib imports
 import mailer from '../../lib/NodeMailer';
-
 // =============================================================================
 
 /**
  * Controller responsible to listing, create and cancel appointments.
- * Send e-mails to providers and notify them.
+ * Send e-mails to providers and notify them (Only in delete method).
  */
 
 class AppointmentController {
@@ -144,6 +143,11 @@ class AppointmentController {
           as: 'provider',
           attributes: ['name', 'email'],
         },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name'],
+        },
       ],
     });
 
@@ -155,6 +159,11 @@ class AppointmentController {
         error: 'You don´t have permission to cancel this appointment',
       });
     }
+
+    /**
+     * User can only cancel the appointment 2 hours before the date
+     * The conditional will check this
+     */
 
     const date = subHours(appointment.date, 2);
 
@@ -168,10 +177,22 @@ class AppointmentController {
 
     await appointment.save();
 
+    /**
+     * This function will send an email for the provider informing about the
+     * cancelation of the appointment
+     */
+
     await mailer.sendMail({
       to: `${appointment.provider.name} <${appointment.provider.email}>`,
       subject: 'Appointment cancelled',
-      text: 'You have a new cancellation',
+      template: 'cancellation',
+      context: {
+        provider: appointment.provider.name,
+        user: appointment.user.name,
+        date: format(appointment.date, "'dia' dd 'de' MMMM', ás' H:mm'h'", {
+          locale: pt,
+        }),
+      },
     });
 
     return response.json(appointment);

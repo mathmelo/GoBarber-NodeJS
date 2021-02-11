@@ -1,11 +1,18 @@
 // IMPORTS =====================================================================
+// Node_modules imports
 import nodemailer from 'nodemailer';
-import mailerConfig from '../config/mail';
+import { resolve } from 'path';
+import exphbs from 'express-handlebars';
+import nodemailerhbs from 'nodemailer-express-handlebars';
 
+// Import Configs
+import mailerConfig from '../config/mail';
 // =============================================================================
+
 /**
  * This class will create a nodemailer transporter to send emails.
  */
+
 class Mail {
   constructor() {
     const { host, port, secure, auth } = mailerConfig;
@@ -16,6 +23,31 @@ class Mail {
       secure,
       auth: auth.user ? auth : null,
     });
+
+    this.configureTemplates();
+  }
+
+  /**
+   * This function make the transporter to understand email templates and
+   * configure paths for the layouts
+   */
+
+  configureTemplates() {
+    const viewPath = resolve(__dirname, '..', 'app', 'views', 'emails');
+
+    this.transporter.use(
+      'compile',
+      nodemailerhbs({
+        viewEngine: exphbs.create({
+          layoutsDir: resolve(viewPath, 'layouts'),
+          partialsDir: resolve(viewPath, 'partials'),
+          defaultLayout: 'default',
+          extname: '.hbs',
+        }),
+        viewPath,
+        extName: '.hbs',
+      })
+    );
   }
 
   /**
