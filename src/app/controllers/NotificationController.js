@@ -1,17 +1,13 @@
-// IMPORTS =====================================================================
-// Models and Schema imports
 import Notification from '../schema/NotificationSchema';
 import User from '../models/User';
-
-// =============================================================================
 
 /**
  * Controller responsible for listing notifications to the provider
  */
 
 class NotificationController {
+  // LISTING - ONE
   async show(request, response) {
-    // Checking if user is a provider
     const checkIsProvider = await User.findOne({
       where: {
         id: request.userId,
@@ -33,6 +29,5 @@ class NotificationController {
     return response.json(notifications);
   }
 }
-// =============================================================================
 
 export default new NotificationController();

@@ -1,17 +1,13 @@
-// IMPORTS =====================================================================
-// Node_modules imports
 import * as Yup from 'yup';
 
-// Models imports
 import User from '../models/User';
-
-// =============================================================================
 
 /**
  * Controller responsible to create and update Users
  */
 
 class UserController {
+  // CREATE
   async store(request, response) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -23,7 +19,10 @@ class UserController {
       return response.status(400).json({ error: 'Validation failed' });
     }
 
-    // Checking if the user already exists
+    /**
+     * Checking if the user already exists
+     */
+
     const userExists = await User.findOne({
       where: { email: request.body.email },
     });
@@ -42,8 +41,8 @@ class UserController {
     });
   }
 
+  // UPDATE
   async update(request, response) {
-    // Field means about continuing verification of var
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
@@ -62,12 +61,14 @@ class UserController {
       return response.status(400).json({ error: 'Validation failed' });
     }
 
-    // Receiving user data for the update
     const { email, oldPassword } = request.body;
 
     const user = await User.findByPk(request.userId);
 
-    // Checking if the typed email is different from the user's email
+    /**
+     * Checking if the typed email is different from the user's email
+     */
+
     if (email && email !== user.email) {
       const userExists = await User.findOne({ where: { email } });
 
@@ -75,11 +76,17 @@ class UserController {
         return response.status(400).json({ error: 'User already exists' });
     }
 
-    // Checking if the typed old password is different from the user's password
+    /**
+     * Checking if the typed old password is different from the user's password
+     */
+
     if (oldPassword && !(await user.checkPassword(oldPassword)))
       return response.status(401).json({ error: 'Password does not match' });
 
-    // If client sends provider manually, it will be converted to false
+    /**
+     * If client sends provider manually, it will be converted to false
+     */
+
     if (request.body.provider) request.body.provider = false;
 
     const { name, provider, id } = await user.update(request.body);
@@ -92,6 +99,5 @@ class UserController {
     });
   }
 }
-// =============================================================================
 
 export default new UserController();

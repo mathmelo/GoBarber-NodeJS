@@ -1,13 +1,8 @@
-// IMPORTS =====================================================================
-// Node_modules imports
 import { Op } from 'sequelize';
 import { startOfDay, endOfDay, parseISO } from 'date-fns';
 
-// Models imports
 import Appointment from '../models/Appointment';
 import User from '../models/User';
-
-// =============================================================================
 
 /**
  * Controller responsible to show all appointments created for the provider in
@@ -15,6 +10,7 @@ import User from '../models/User';
  */
 
 class Schedule {
+  // LISTING - ONE
   async show(request, response) {
     const checkIsProvider = await User.findOne({
       where: {
@@ -46,6 +42,5 @@ class Schedule {
     return response.json(appointments);
   }
 }
-// =============================================================================
 
 export default new Schedule();

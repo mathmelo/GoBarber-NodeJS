@@ -1,12 +1,10 @@
-// IMPORTS =====================================================================
-// Node_modules imports
 import nodemailer from 'nodemailer';
 import { resolve } from 'path';
 import exphbs from 'express-handlebars';
 import nodemailerhbs from 'nodemailer-express-handlebars';
 
-// Import Configs
 import mailerConfig from '../config/mail';
+
 // =============================================================================
 
 /**
@@ -54,6 +52,7 @@ class Mail {
    * These two same "sendMail" functions are made to load default settings.
    * from the mailerConfig file first.
    */
+
   sendMail(message) {
     return this.transporter.sendMail({
       ...mailerConfig.default,

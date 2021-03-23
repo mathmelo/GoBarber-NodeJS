@@ -1,15 +1,12 @@
-// IMPORTS =====================================================================
-// Models imports
 import User from '../models/User';
 import File from '../models/File';
-
-// =============================================================================
 
 /**
  * Controller responsible to show all providers
  */
 
 class ProviderController {
+  // LISTING - ONE
   async show(request, response) {
     const providers = await User.findAll({
       where: {
@@ -28,6 +25,5 @@ class ProviderController {
     return response.json(providers);
   }
 }
-// =============================================================================
 
 export default new ProviderController();

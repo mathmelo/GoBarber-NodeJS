@@ -1,20 +1,16 @@
-// IMPORTS =====================================================================
-// Node_modules imports
 import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
 
-// User model import
 import User from '../models/User';
 
-// Auth config
 import authConfig from '../../config/auth';
-
-// =============================================================================
 
 /**
  * Controller responsible for create a session with JWT autentication
  */
+
 class Session {
+  // CREATE
   async store(request, response) {
     const schema = Yup.object().shape({
       email: Yup.string().email().required(),
@@ -26,13 +22,20 @@ class Session {
     }
 
     const { email, password } = request.body;
+
     const user = await User.findOne({ where: { email } });
 
-    // Checking email existance
+    /**
+     * Checking email existance
+     */
+
     if (!user)
       return response.status(401).json({ error: 'User does not exist' });
 
-    // Checking password match
+    /**
+     * Checking password match
+     */
+
     if (!(await user.checkPassword(password)))
       return response.status(401).json({ message: 'Password does not match' });
 
@@ -51,6 +54,5 @@ class Session {
     });
   }
 }
-// =============================================================================
 
 export default new Session();

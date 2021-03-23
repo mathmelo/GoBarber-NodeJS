@@ -1,9 +1,7 @@
-// IMPORTS =====================================================================
-// Node_modules imports.
 import { Router } from 'express';
 import multer from 'multer';
 
-// Import Controllers.
+// Controllers.
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
@@ -12,43 +10,42 @@ import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
 import NotificationController from './app/controllers/NotificationController';
 
-// Import Middlewares.
+// Middlewares.
 import Auth from './app/middlewares/auth';
 
-// Import Configs.
+// Configs.
 import multerConfig from './config/multer';
 
-// PREVIOUS CONFIGURATION ======================================================
-// Creating Router Instance.
+// =============================================================================
 const routes = new Router();
 
 // Creating Multer Middleware to file saving.
 const upload = multer(multerConfig);
 
 // ROUTES ======================================================================
-// User Routes.
+
+// USER ROUTES *****************************************************************
 routes.post('/users', UserController.store);
 routes.put('/users', Auth, UserController.update);
 
-// Provider Routes.
+// PROVIDER ROUTES *************************************************************
 routes.get('/providers', Auth, ProviderController.show);
 
-// Session Routes.
+// SESSION ROUTES **************************************************************
 routes.post('/sessions', SessionController.store);
 
-// Appointment Routes.
+// APPOINTMENT ROUTES **********************************************************
 routes.post('/appointments', Auth, AppointmentController.store);
 routes.get('/appointments', Auth, AppointmentController.show);
-routes.delete('/appointments/:id', Auth, AppointmentController.delete);
+routes.delete('/appointments/:id', Auth, AppointmentController.destroy);
 
-// Notification Routes.
+// NOTIFICATION ROUTES *********************************************************
 routes.get('/notifications', Auth, NotificationController.show);
 
-// Schedule Routes.
+// SCHEDULE ROUTES *************************************************************
 routes.get('/schedule', Auth, ScheduleController.show);
 
-// Upload Routes.
+// UPLOAD ROUTES ***************************************************************
 routes.post('/files', Auth, upload.single('file'), FileController.store);
 
-// Exporting routes.
 export default routes;

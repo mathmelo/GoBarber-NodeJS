@@ -1,13 +1,8 @@
-// IMPORTS =====================================================================
 import Sequelize, { Model } from 'sequelize';
 import bcryptjs from 'bcryptjs';
 
-// =============================================================================
-
 class User extends Model {
-  // Variable 'sequelize' is a data connection from database file
   static init(sequelize) {
-    // Two parameters: User data and connection data
     super.init(
       {
         name: Sequelize.STRING,
@@ -21,7 +16,10 @@ class User extends Model {
       }
     );
 
-    // Turns password into a hash
+    /**
+     * Turns password into a hash
+     */
+
     this.addHook('beforeSave', async (user) => {
       if (user.password) {
         user.password_hash = await bcryptjs.hash(user.password, 8);
@@ -31,16 +29,21 @@ class User extends Model {
     return this;
   }
 
-  // Associates file IDs with the avatar_id column
+  /**
+   * Associates file IDs with the avatar_id column
+   */
+
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 
-  // Check if the password is correct
+  /**
+   * Check if the password is correct
+   */
+
   checkPassword(password) {
     return bcryptjs.compare(password, this.password_hash);
   }
 }
 
-// Exporting only reference of class
 export default User;

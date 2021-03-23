@@ -1,17 +1,14 @@
-// IMPORTS =====================================================================
-// Node_modules imports
 import * as Yup from 'yup';
 import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
-// Models imports
 import User from '../models/User';
 import File from '../models/File';
 import Appointment from '../models/Appointment';
 import Notification from '../schema/NotificationSchema';
 
-// Lib imports
 import mailer from '../../lib/NodeMailer';
+
 // =============================================================================
 
 /**
@@ -20,6 +17,7 @@ import mailer from '../../lib/NodeMailer';
  */
 
 class AppointmentController {
+  // LISTING - ONE
   async show(request, response) {
     const { page = 1 } = request.query;
 
@@ -51,6 +49,7 @@ class AppointmentController {
     return response.json(appointments);
   }
 
+  // CREATE
   async store(request, response) {
     const schema = Yup.object().shape({
       provider_id: Yup.number().required(),
@@ -62,7 +61,10 @@ class AppointmentController {
 
     const { provider_id, date } = request.body;
 
-    // Checking if a provider_id belongs to a provider
+    /**
+     * Checking if a provider_id belongs to a provider
+     */
+
     const isProvider = await User.findOne({
       where: {
         id: provider_id,
@@ -76,7 +78,10 @@ class AppointmentController {
         .json({ error: 'You can only create an appointment with providers' });
     }
 
-    // Checking if the user is creating a appointment with himself
+    /**
+     * Checking if the user is creating a appointment with himself
+     */
+
     if (provider_id === request.userId)
       return response
         .status(400)
@@ -87,6 +92,7 @@ class AppointmentController {
      * First: Client cannot create  an appointment before actual date
      * Second: Client cannot create an appointment with same date as the other
      */
+
     const hourStart = startOfHour(parseISO(date));
 
     if (isBefore(hourStart, new Date())) {
@@ -118,7 +124,9 @@ class AppointmentController {
     /**
      * Notify appointment provider
      */
+
     const user = await User.findByPk(request.userId);
+
     const formattedDate = format(
       hourStart,
       "'dia' dd 'de' MMMM', ás' H:mm'h'",
@@ -135,7 +143,8 @@ class AppointmentController {
     return response.json(appointments);
   }
 
-  async delete(request, response) {
+  // DELETE
+  async destroy(request, response) {
     const appointment = await Appointment.findByPk(request.params.id, {
       include: [
         {
@@ -199,5 +208,4 @@ class AppointmentController {
   }
 }
 
-// =============================================================================
 export default new AppointmentController();
