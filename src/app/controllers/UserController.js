@@ -1,24 +1,14 @@
-import * as Yup from 'yup';
-
 import User from '../models/User';
 
+import Cache from '../../lib/Cache';
+
 /**
- * Controller responsible to create and update Users
+ *  CONTROLLER RESPONSIBLE FOR CREATING AND UPDATING USERS
  */
 
 class UserController {
-  // CREATE
+  // *** Create User***
   async store(request, response) {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      email: Yup.string().email().required(),
-      password: Yup.string().required().min(6),
-    });
-
-    if (!(await schema.isValid(request.body))) {
-      return response.status(400).json({ error: 'Validation failed' });
-    }
-
     /**
      * Checking if the user already exists
      */
@@ -31,6 +21,12 @@ class UserController {
       return response.status(400).json({ error: 'User already exists' });
     }
 
+    const { provider: providerCache } = request.body;
+
+    if (providerCache) {
+      await Cache.invalidate('providers');
+    }
+
     const { name, email, provider, id } = await User.create(request.body);
 
     return response.json({
@@ -41,26 +37,8 @@ class UserController {
     });
   }
 
-  // UPDATE
+  // *** Update User***
   async update(request, response) {
-    const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string().email(),
-      oldPassword: Yup.string().min(6),
-      password: Yup.string()
-        .min(6)
-        .when('oldPassword', (oldPassword, field) =>
-          oldPassword ? field.required() : field
-        ),
-      confirmPassword: Yup.string().when('password', (password, field) =>
-        password ? field.required().oneOf([Yup.ref('password')]) : field
-      ),
-    });
-
-    if (!(await schema.isValid(request.body))) {
-      return response.status(400).json({ error: 'Validation failed' });
-    }
-
     const { email, oldPassword } = request.body;
 
     const user = await User.findByPk(request.userId);

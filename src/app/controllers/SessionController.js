@@ -1,26 +1,14 @@
 import jwt from 'jsonwebtoken';
-import * as Yup from 'yup';
-
 import User from '../models/User';
-
 import authConfig from '../../config/auth';
 
 /**
- * Controller responsible for create a session with JWT autentication
+ * CONTROLLER RESPONSIBLE FOR CREATING A SESSION WITH JWT AUTHENTICATION
  */
 
 class Session {
-  // CREATE
+  // *** Create Session ***
   async store(request, response) {
-    const schema = Yup.object().shape({
-      email: Yup.string().email().required(),
-      password: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid(request.body))) {
-      return response.status(400).json({ error: 'Validation failed' });
-    }
-
     const { email, password } = request.body;
 
     const user = await User.findOne({ where: { email } });

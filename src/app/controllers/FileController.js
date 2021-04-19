@@ -1,10 +1,11 @@
 import File from '../models/File';
 
 /**
- * Controller responsible to create a file data and upload it to storage
+ * CONTROLLER RESPONSIBLE FOR CREATING A DATA FILE AND UPLOADING IT FOR STORAGE
  */
 
 class FileController {
+  // *** Create File ***
   async store(request, response) {
     const { originalname: name, filename: path } = request.file;
 

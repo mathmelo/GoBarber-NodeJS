@@ -5,13 +5,13 @@ import Appointment from '../models/Appointment';
 import User from '../models/User';
 
 /**
- * Controller responsible to show all appointments created for the provider in
- * question
+ * CONTROLLER RESPONSIBLE FOR SHOWING ALL APPOINTMENTS CREATED FOR THE
+ * PROVIDER IN QUESTION
  */
 
 class Schedule {
-  // LISTING - ONE
-  async show(request, response) {
+  // *** Listing ***
+  async index(request, response) {
     const checkIsProvider = await User.findOne({
       where: {
         id: request.userId,

@@ -2,12 +2,12 @@ import Notification from '../schema/NotificationSchema';
 import User from '../models/User';
 
 /**
- * Controller responsible for listing notifications to the provider
+ * CONTROLLER RESPONSIBLE FOR LISTING NOTIFICATIONS
  */
 
 class NotificationController {
-  // LISTING - ONE
-  async show(request, response) {
+  // *** Listing Notifications ***
+  async index(request, response) {
     const checkIsProvider = await User.findOne({
       where: {
         id: request.userId,

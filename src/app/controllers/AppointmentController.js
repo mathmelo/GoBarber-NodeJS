@@ -1,4 +1,3 @@
-import * as Yup from 'yup';
 import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
@@ -7,18 +6,20 @@ import File from '../models/File';
 import Appointment from '../models/Appointment';
 import Notification from '../schema/NotificationSchema';
 
-import mailer from '../../lib/NodeMailer';
+import Queue from '../../lib/Queue';
+import CancellationMail from '../jobs/CancellationMail';
 
 // =============================================================================
 
 /**
- * Controller responsible to listing, create and cancel appointments.
- * Send e-mails to providers and notify them (Only in delete method).
+ * CONTROLLER RESPONSIBLE TO LISTING, CREATE AND CANCEL APPOINTMENTS.
+ * OBS:
+ *  --> Send e-mails to providers and notify them (only in delete method).
  */
 
 class AppointmentController {
-  // LISTING - ONE
-  async show(request, response) {
+  // *** Listing Appointments ***
+  async index(request, response) {
     const { page = 1 } = request.query;
 
     const appointments = await Appointment.findAll({
@@ -27,7 +28,7 @@ class AppointmentController {
         canceled_at: null,
       },
       order: ['date'],
-      attributes: ['id', 'date'],
+      attributes: ['id', 'date', 'past', 'cancelable'],
       limit: 20,
       offset: (page - 1) * 20,
       include: [
@@ -49,16 +50,8 @@ class AppointmentController {
     return response.json(appointments);
   }
 
-  // CREATE
+  // *** Create Appointments ***
   async store(request, response) {
-    const schema = Yup.object().shape({
-      provider_id: Yup.number().required(),
-      date: Yup.date().required(),
-    });
-
-    if (!(await schema.isValid(request.body)))
-      return response.status(400).json({ error: 'Validation fails' });
-
     const { provider_id, date } = request.body;
 
     /**
@@ -143,7 +136,7 @@ class AppointmentController {
     return response.json(appointments);
   }
 
-  // DELETE
+  // *** Delete Appointments ***
   async destroy(request, response) {
     const appointment = await Appointment.findByPk(request.params.id, {
       include: [
@@ -187,21 +180,11 @@ class AppointmentController {
     await appointment.save();
 
     /**
-     * This function will send an email for the provider informing about the
-     * cancelation of the appointment
+     * This function will add a cancellation e-mail to queue
      */
 
-    await mailer.sendMail({
-      to: `${appointment.provider.name} <${appointment.provider.email}>`,
-      subject: 'Appointment cancelled',
-      template: 'cancellation',
-      context: {
-        provider: appointment.provider.name,
-        user: appointment.user.name,
-        date: format(appointment.date, "'dia' dd 'de' MMMM', ás' H:mm'h'", {
-          locale: pt,
-        }),
-      },
+    await Queue.add(CancellationMail.key, {
+      appointment,
     });
 
     return response.json(appointment);
