@@ -9,6 +9,13 @@ import ProviderController from './app/controllers/ProviderController';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
 import NotificationController from './app/controllers/NotificationController';
+import AvailableController from './app/controllers/AvailableController';
+
+// Input Validators
+import UserStore from './app/validators/UserStore';
+import UserUpdate from './app/validators/UserUpdate';
+import SessionStore from './app/validators/SessionStore';
+import AppointmentStore from './app/validators/AppointmentStore';
 
 // Middlewares.
 import Auth from './app/middlewares/auth';
@@ -17,35 +24,40 @@ import Auth from './app/middlewares/auth';
 import multerConfig from './config/multer';
 
 // =============================================================================
-const routes = new Router();
 
-// Creating Multer Middleware to file saving.
+const routes = new Router();
 const upload = multer(multerConfig);
 
 // ROUTES ======================================================================
 
-// USER ROUTES *****************************************************************
-routes.post('/users', UserController.store);
-routes.put('/users', Auth, UserController.update);
+// *** Session ***
+routes.post('/sessions', SessionStore, SessionController.store);
 
-// PROVIDER ROUTES *************************************************************
-routes.get('/providers', Auth, ProviderController.show);
+// *** User ***
+routes.post('/users', UserStore, UserController.store);
+routes.put('/users', Auth, UserUpdate, UserController.update);
 
-// SESSION ROUTES **************************************************************
-routes.post('/sessions', SessionController.store);
+// *** Provider ***
+routes.get('/providers', Auth, ProviderController.index);
+routes.get('/providers/:providerId/available', Auth, AvailableController.index);
 
-// APPOINTMENT ROUTES **********************************************************
-routes.post('/appointments', Auth, AppointmentController.store);
-routes.get('/appointments', Auth, AppointmentController.show);
+// *** Provider Schedule ***
+routes.get('/schedule', Auth, ScheduleController.index);
+
+// *** Appointment ***
+routes.post(
+  '/appointments',
+  Auth,
+  AppointmentStore,
+  AppointmentController.store
+);
+routes.get('/appointments', Auth, AppointmentController.index);
 routes.delete('/appointments/:id', Auth, AppointmentController.destroy);
 
-// NOTIFICATION ROUTES *********************************************************
-routes.get('/notifications', Auth, NotificationController.show);
+// *** Notification ***
+routes.get('/notifications', Auth, NotificationController.index);
 
-// SCHEDULE ROUTES *************************************************************
-routes.get('/schedule', Auth, ScheduleController.show);
-
-// UPLOAD ROUTES ***************************************************************
+// *** Upload ***
 routes.post('/files', Auth, upload.single('file'), FileController.store);
 
 export default routes;

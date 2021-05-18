@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const ENV = process.env.NODE_ENV || 'development';
 
 const dbConfig = {
@@ -9,6 +7,7 @@ const dbConfig = {
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
+    port: process.env.POSTGRES_PORT,
     define: {
       // Sets the time when creating a user.
       timestamps: true,

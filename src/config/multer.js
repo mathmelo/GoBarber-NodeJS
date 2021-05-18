@@ -10,7 +10,7 @@ export default {
   // File save function
   storage: multer.diskStorage({
     // File storage
-    destination: resolve(__dirname, '..', '..', 'tmp'),
+    destination: resolve(__dirname, '..', '..', 'tmp', 'uploads'),
     // File name
     filename: (request, file, cb) => {
       // Converting file name with crypto and extname functions

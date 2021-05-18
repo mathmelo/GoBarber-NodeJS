@@ -1,29 +1,40 @@
-// IMPORTS =====================================================================
-// Node_modules imports.
 import express from 'express';
 import path from 'path';
+import Youch from 'youch';
+import * as Sentry from '@sentry/node';
+import SentryConfig from './config/sentry';
 
-// Import routes.
+import 'express-async-errors';
+
 import routes from './routes';
 
-// Import model loader.
 import './database';
 
 // =============================================================================
+
+/**
+ * This class will be responsible for general application settings, including
+ * global middlewares, routes and database calls.
+ *
+ * OBS:
+ *  --> Sentry is an exception receptor
+ *  --> Youch is a pretty error reporter
+ */
+
 class App {
   constructor() {
-    // Create server.
     this.server = express();
 
-    // Calling middleware and routes to server.
+    Sentry.init(SentryConfig);
+
     this.middlewares();
     this.routes();
+    this.exceptionHandler();
   }
 
   middlewares() {
-    // Give server the ability to understand JSON format.
+    this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(express.json());
-    // Give server the ability to show static files.
     this.server.use(
       '/files',
       express.static(path.resolve(__dirname, '..', 'tmp'))
@@ -31,11 +42,21 @@ class App {
   }
 
   routes() {
-    // Import routes into the application.
     this.server.use(routes);
+    this.server.use(Sentry.Handlers.errorHandler());
+  }
+
+  exceptionHandler() {
+    this.server.use(async (err, request, response, next) => {
+      if (process.env.NODE_ENV === 'development') {
+        const errors = await new Youch(err, request).toJSON();
+
+        return response.status(500).json(errors);
+      }
+
+      return response.status(500).json({ message: 'Internal server error' });
+    });
   }
 }
 
-// =============================================================================
-// Export "server" of the application.
 export default new App().server;

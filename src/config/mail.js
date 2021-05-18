@@ -1,7 +1,5 @@
 /**
  * Configuration of email service
- * For dev: Mailtrap
- * For prod: Amazon SAS
  */
 
 export default {

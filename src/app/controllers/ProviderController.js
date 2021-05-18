@@ -1,13 +1,21 @@
 import User from '../models/User';
 import File from '../models/File';
 
+import Cache from '../../lib/Cache';
+
 /**
- * Controller responsible to show all providers
+ * CONTROLLER RESPONSIBLE FOR LISTING ALL PROVIDERS
  */
 
 class ProviderController {
-  // LISTING - ONE
-  async show(request, response) {
+  // *** Listing Providers ***
+  async index(request, response) {
+    const cached = await Cache.get('providers');
+
+    if (cached) {
+      return response.json(cached);
+    }
+
     const providers = await User.findAll({
       where: {
         provider: true,
@@ -21,6 +29,8 @@ class ProviderController {
         },
       ],
     });
+
+    await Cache.set('providers', providers);
 
     return response.json(providers);
   }

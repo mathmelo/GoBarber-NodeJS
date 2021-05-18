@@ -4,19 +4,24 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node -r sucrase/register src/server",
+    "start": "node dist/server",
+    "build": "sucrase ./src -d ./dist --transforms imports",
     "dev": "nodemon src/server",
+    "queue": "nodemon src/queue",
     "dev:debug": "nodemon --inspect src/server",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo"
   },
   "dependencies": {
+    "@sentry/node": "^6.2.3",
     "bcryptjs": "^2.4.3",
     "bee-queue": "^1.3.1",
     "date-fns": "^2.0.0-beta.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "express-handlebars": "^5.2.0",
+    "ioredis": "^4.24.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.14",
     "multer": "^1.4.2",
@@ -26,6 +31,7 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
     "sucrase": "^3.16.0",
+    "youch": "^2.2.1",
     "yup": "^0.32.1"
   },
   "devDependencies": {
