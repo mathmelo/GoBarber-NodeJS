@@ -23,7 +23,10 @@ const dbConfig = {
   },
   production: {
     dialect: 'postgres',
-    url: `${process.env.DATABASE_URL}?ssl=off`,
+    dialectOptions: {
+      ssl: false,
+    },
+    url: process.env.DATABASE_URL,
     define: {
       timestamps: true,
       underscored: true,
