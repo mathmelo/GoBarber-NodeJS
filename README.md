@@ -8,11 +8,11 @@
 </p>
 
 <div align="center">
- <a href="##-objective">objective</a> •
- <a href="##-roadmap">roadmap</a> • 
- <a href="##-technologies">technologies</a> • 
- <a href="##-licence">license</a> • 
- <a href="##-author">author</a>
+ <a href="#-objective">objective</a> •
+ <a href="#-roadmap">roadmap</a> • 
+ <a href="#-technologies">technologies</a> • 
+ <a href="#-licence">license</a> • 
+ <a href="#-author">author</a>
 </div>
 
 ## 💡 Objective
