@@ -7,15 +7,15 @@
   <img alt="NPM" src="https://img.shields.io/github/stars/melosso/GoBarber-NodeJS-Backend">
 </p>
 
-<p align="center">
- <a href="##Objective">Objective</a> •
- <a href="##Roadmap">Roadmap</a> • 
- <a href="##Technologies">Technologies</a> • 
+<div align="center">
+ <a href="##objective">objective</a> •
+ <a href="##roadmap">roadmap</a> • 
+ <a href="##technologies">technologies</a> • 
  <a href="##licence">license</a> • 
- <a href="##autor">Author</a>
-</p>
+ <a href="##author">author</a>
+</div>
 
-## Objective
+## 💡 Objective
 <p>The main purpose of this API is to connect service providers (barbers) to their customers, so they can more easily manage their appointments.</p>
 <p>Basically, the API allows both types of users to register in the system. Barbers will be responsible for managing appointments and clients will be responsible for choosing and hiring a preferred barber. </p>
 
@@ -36,9 +36,20 @@ Also it's nice to have an editor to work with the code like [VSCode](https://cod
 
 ### Running the Back End (server)
 
+To execute these commands, you will need to create 3 containers in the docker
+- [Postgres database](https://hub.docker.com/_/postgres)
+- [MongoDB database](https://hub.docker.com/_/mongo)
+- [Redis database](https://hub.docker.com/_/redis)
+
+**🚫 Important**
+- A .env file must be created in the project's root folder containing all access keys, including  to the databases.
+- The .env.exemple file can be used as an example
+
+**Execute the commands**
+
 ```bash
 # Clone this repository
-$ git clone <https://github.com/melosso/GoBarber-NodeJS-Backend>
+$ git clone https://github.com/melosso/GoBarber-NodeJS-Backend
 
 # Access the project folder in the terminal/cmd
 $cd GoBarber-NodeJS-Backend
@@ -46,10 +57,15 @@ $cd GoBarber-NodeJS-Backend
 # Install dependencies
 $ yarn
 
+# Run migrations
+$ yarn migrate
+
 # Run the application in development mode
+# The application must run on two nodes. If you are using VsCode, just open a terminal for each of these commands
+$ yarn queue
 $ yarn dev
 
-# The server will start on port:3333 - go to <http://localhost:3333>
+# The server will start on port:3335 - go to <http://localhost:3335>
 ```
 
 ## 💜 Technologies
@@ -62,6 +78,16 @@ $ yarn dev
 - Nodemailer
 - JWT
 
+## 📕 License
+
+Read the license [here](https://github.com/melosso/GoBarber-NodeJS-Backend/blob/main/LICENSE).
+
+## 🤓 Author
+
+Informations about [me](https://github.com/melosso).
+Send me a message! ;)
+
 <h4 align="center"> 
 	🚧  GoBarber 🚀In construction ...  🚧
+  **Building docs**
 </h4>
