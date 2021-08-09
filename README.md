@@ -88,6 +88,6 @@ Informations about [me](https://github.com/melosso).
 Send me a message! ;)
 
 <h4 align="center"> 
-	🚧  GoBarber 🚀In construction ...  🚧
-  **Building docs**
+	🚧  GoBarber 🚀 In construction...  🚧</br>
+  <strong>Building docs</strong>
 </h4>
