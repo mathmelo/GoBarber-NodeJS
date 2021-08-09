@@ -14,7 +14,7 @@ import Appointment from '../models/Appointment';
 // =============================================================================
 
 /**
- * CONTROLLER RESPONSIBLE FOR CHECKING THE DATES AVAILABLE TO CREATE
+ * CONTROLLER RESPONSIBLE FOR CHECKING AVAILABLE DATES TO CREATE
  * NEW APPOINTMENTS
  */
 
