@@ -15,6 +15,13 @@
  <a href="#-author">author</a>
 </div>
 
+---
+</br>
+<p align="center" >
+  <img src="./.github/GoBarberAPI.png" height="250" margin-top="400">
+</p>
+</br>
+
 ## 💡 Objective
 <p>The main purpose of this API is to connect service providers (barbers) to their customers, so they can more easily manage their appointments.</p>
 <p>Basically, the API allows both types of users to register in the system. Barbers will be responsible for managing appointments and clients will be responsible for choosing and hiring a preferred barber. </p>
