@@ -30,7 +30,7 @@ class Appointment extends Model {
   }
 
   /**
-   * Relationship with providers and no providers
+   * Relationship with providers and clients
    */
 
   static associate(models) {
