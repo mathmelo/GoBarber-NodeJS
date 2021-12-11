@@ -1,6 +1,6 @@
 /**
  * GoBarber API
- * Made with love by https://github.com/melosso
+ * Made with love by https://github.com/mathmelo
  * Api created based on GoStack training by Rocketseat
  * Matheus Melo da Costa - 2021
  */
