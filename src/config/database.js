@@ -8,6 +8,7 @@ const dbConfig = {
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
     port: process.env.POSTGRES_PORT,
+    logging: false,
     define: {
       // Sets the time when creating a user.
       timestamps: true,
