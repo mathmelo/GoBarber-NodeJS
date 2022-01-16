@@ -1,10 +1,10 @@
 <h1 align="center">GoBarber</h1>
 <p align="center">🚀 Appointment Management API for Barber Services</p>
 <p align="center">
-  <img alt="NPM" src="https://img.shields.io/github/license/melosso/GoBarber-NodeJS-Backend">
-  <img alt="NPM" src="https://img.shields.io/github/issues/melosso/GoBarber-NodeJS-Backend">
-  <img alt="NPM" src="https://img.shields.io/github/forks/melosso/GoBarber-NodeJS-Backend">
-  <img alt="NPM" src="https://img.shields.io/github/stars/melosso/GoBarber-NodeJS-Backend">
+  <img alt="NPM" src="https://img.shields.io/github/license/mathmelo/GoBarber-NodeJS-Backend">
+  <img alt="NPM" src="https://img.shields.io/github/issues/mathmelo/GoBarber-NodeJS-Backend">
+  <img alt="NPM" src="https://img.shields.io/github/forks/mathmelo/GoBarber-NodeJS-Backend">
+  <img alt="NPM" src="https://img.shields.io/github/stars/mathmelo/GoBarber-NodeJS-Backend">
 </p>
 
 <div align="center">
@@ -55,7 +55,7 @@ To execute these commands, you will need to create 3 containers in the docker
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/melosso/GoBarber-NodeJS-Backend
+$ git clone https://github.com/mathmelo/GoBarber-NodeJS-Backend
 
 # Access the project folder in the terminal/cmd
 $cd GoBarber-NodeJS-Backend
@@ -86,11 +86,11 @@ $ yarn dev
 
 ## 📕 License
 
-Read the license [here](https://github.com/melosso/GoBarber-NodeJS-Backend/blob/main/LICENSE).
+Read the license [here](https://github.com/mathmelo/GoBarber-NodeJS-Backend/blob/main/LICENSE).
 
 ## 🤓 Author
 
-Informations about [me](https://github.com/melosso).
+Informations about [me](https://github.com/mathmelo).
 Send me a message! ;)
 
 <h4 align="center"> 
