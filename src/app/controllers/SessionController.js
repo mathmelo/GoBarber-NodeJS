@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import File from '../models/File';
 import authConfig from '../../config/auth';
 
 /**
@@ -11,7 +12,12 @@ class Session {
   async store(request, response) {
     const { email, password } = request.body;
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email },
+      include: [
+        { model: File, as: 'avatar', attributes: ['path', 'url', 'id'] },
+      ],
+    });
 
     /**
      * Checking email existance
@@ -27,13 +33,14 @@ class Session {
     if (!(await user.checkPassword(password)))
       return response.status(401).json({ message: 'Password does not match' });
 
-    const { id, name } = user;
+    const { id, name, avatar } = user;
 
     return response.json({
       user: {
         id,
         name,
         email,
+        avatar,
       },
       // Creating login token
       token: jwt.sign({ id }, authConfig.youDidNotSeeAnything, {

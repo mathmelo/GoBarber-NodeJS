@@ -1,4 +1,5 @@
 import User from '../models/User';
+import File from '../models/File';
 
 import Cache from '../../lib/Cache';
 
@@ -67,13 +68,23 @@ class UserController {
 
     if (request.body.provider) request.body.provider = false;
 
-    const { name, provider, id } = await user.update(request.body);
+    await user.update(request.body);
+
+    const { id, name, avatar } = await User.findByPk(request.userId, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
 
     return response.json({
       id,
       name,
       email,
-      provider,
+      avatar,
     });
   }
 }
