@@ -28,6 +28,32 @@ class NotificationController {
 
     return response.json(notifications);
   }
+
+  async update(request, response) {
+    const notificationId = request.params.id;
+
+    const notification = await Notification.findById(notificationId);
+
+    if (!notification) {
+      return response
+        .status(400)
+        .json({ message: 'Notification does not exists' });
+    }
+
+    if (notification.read === true) {
+      return response
+        .status(400)
+        .json({ message: 'Notification has already been read' });
+    }
+
+    if (notification.user !== request.userId) {
+      return response.status(404).json({ message: 'Unauthorized operation' });
+    }
+
+    await notification.updateOne({ read: true });
+
+    return response.status(200).json({ message: 'Notification updated' });
+  }
 }
 
 export default new NotificationController();

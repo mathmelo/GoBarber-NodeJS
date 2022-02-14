@@ -56,6 +56,7 @@ routes.delete('/appointments/:id', Auth, AppointmentController.destroy);
 
 // *** Notification ***
 routes.get('/notifications', Auth, NotificationController.index);
+routes.put('/notifications/:id', Auth, NotificationController.update);
 
 // *** Upload ***
 routes.post('/files', Auth, upload.single('file'), FileController.store);
