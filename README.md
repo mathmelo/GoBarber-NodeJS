@@ -1,4 +1,7 @@
-<h1 align="center">GoBarber</h1>
+<div align="center">
+    <img src="./.github/logo-purple.svg" height="40"/>
+  <h1>GoBarber</h1>
+</div>
 <p align="center">🚀 Appointment Management API for Barber Services</p>
 <p align="center">
   <img alt="NPM" src="https://img.shields.io/github/license/mathmelo/GoBarber-NodeJS-Backend">
@@ -24,6 +27,8 @@
 ## 💡 Objective
 <p>The main purpose of this API is to connect service providers (barbers) to their customers, so they can more easily manage their appointments.</p>
 <p>Basically, the API allows both types of users to register in the system. Barbers will be responsible for managing appointments and clients will be responsible for choosing and hiring a preferred barber. </p>
+
+**> [Check the web version](https://github.com/mathmelo/GoBarber-React-Frontend)**
 
 ## 🎌 Roadmap
 
