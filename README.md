@@ -28,7 +28,9 @@
 <p>The main purpose of this API is to connect service providers (barbers) to their customers, so they can more easily manage their appointments.</p>
 <p>Basically, the API allows both types of users to register in the system. Barbers will be responsible for managing appointments and clients will be responsible for choosing and hiring a preferred barber. </p>
 
-**> [Check the web version](https://github.com/mathmelo/GoBarber-React)**
+> [Check the WEB version](https://github.com/mathmelo/GoBarber-React)
+
+> [Check the MOBILE version](https://github.com/mathmelo/GoBarber-React-Native)
 
 ## 🎌 Roadmap
 
